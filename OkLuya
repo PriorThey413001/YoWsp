@@ -1443,6 +1443,47 @@ end
     end)
 
 
+local L_11_ = L_4_:NewTab("Fun Stuff")
+local L_12_ = L_11_:NewSection("Selection")
+L_12_:NewButton(
+	"Spam Call Everyone",
+	"Spam Calls Everyone",
+    function()
+    getgenv().SpamPhone = not getgenv().SpamPhone
+while SpamPhone do wait()
+   for i,v in pairs(game.Players:GetPlayers()) do
+       wait(00.1)
+       game.ReplicatedStorage.MainEvent:FireServer("PhoneCall", v.Name)
+   end
+end
+    end)
+L_12_:NewButton(
+	"Loop Mute Boombox",
+	"Serversided",
+    function()
+    for i, v in pairs(game:GetService'Players':GetChildren()) do
+if v and v.Character then
+local character = v.Character.name
+
+   getgenv().Toggled = true
+   
+   local Player = character
+   
+   local Players = game:GetService('Players')
+   local RunService = game:GetService('RunService')
+   
+   RunService.Heartbeat:Connect(function()
+       if Toggled then
+           pcall(function()
+               Players[Player].Character.LowerTorso:FindFirstChild('BOOMBOXSOUND').Playing = false
+               Players[Player].Character.LowerTorso:FindFirstChild('BOOMBOXSOUND').TimePosition = 0
+           end)
+       end
+   end)
+end
+end
+    end)
+
 local L_17_ = L_4_:NewTab("Players")
 local L_18_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/NotPluschi/Esp/main/DashX"))()
 local L_19_ = L_17_:NewSection("Selections")
