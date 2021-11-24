@@ -1,3 +1,11 @@
+if game.PlaceId ~= 2788229376 then game.StarterGui:SetCore("SendNotification", {
+    Title = "Prior X";
+    Text = "Game: Not Supported";
+    Duration = 15;
+})
+wait(3) return end
+
+
 game.StarterGui:SetCore("SendNotification", {
     Title = "Prior X";
     Text = "Checking";
@@ -32,13 +40,6 @@ if plr:IsInGroup(groupID) then
     Text = getuser;
     Duration = 20;
 })
-
-if game.PlaceId ~= 2788229376 then game.StarterGui:SetCore("SendNotification", {
-    Title = "Prior X";
-    Text = "Game: Not Supported";
-    Duration = 15;
-})
-wait(3) return end
 
 
 local L_3_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
