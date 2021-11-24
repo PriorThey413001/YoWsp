@@ -63,7 +63,7 @@ L_6_:NewButton(
 	function()
 	_G.KEY = "q"
 _G.PART = "HumanoidRootPart"
-_G.PRED = 0.10
+_G.PRED = 0.157
 _G.Frame = Vector3.new(0, 0.53, 0)
 local L_76_ = game:GetService "Workspace".CurrentCamera
 local L_77_
