@@ -1,3 +1,37 @@
+    Title = "Slap.cc";
+    Text = "Checking";
+    Duration = 15;
+})
+wait(3)
+
+local p = Instance.new("IntValue")
+p.Parent = workspace
+p.Value = game.Players.LocalPlayer.userId
+getuser = game.Players.LocalPlayer.Name
+message = "Logged in"
+
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Slap.cc";
+    Text = "Logging in";
+    Duration = 20;
+})
+wait(10)
+
+
+local plr = game.Players.LocalPlayer
+repeat wait() until plr.Character
+local gui = script.Parent
+
+local groupID = 12525963
+if plr:IsInGroup(groupID) then
+
+    game.StarterGui:SetCore("SendNotification", {
+    Title = "Welcome";
+    Text = getuser;
+    Duration = 20;
+})
+
 if game.PlaceId ~= 2788229376 then game.StarterGui:SetCore("SendNotification", {
     Title = "Slap.cc";
     Text = "Game: Not Supported";
@@ -1540,3 +1574,21 @@ L_19_:NewToggle(
 		L_18_.Boxes = L_204_arg0
 	end
 )
+
+print("Verison 1.5")
+print("Script loaded = true")
+print("Whitelisted = true")
+print(message,getuser)
+
+else
+    game.StarterGui:SetCore("SendNotification", {
+    Title = "Serpent X";
+    Text = "Failed";
+    Duration = 10;
+    wait(3)
+})
+warn("Whitelisted = false")
+warn("Script loaded = false")
+game.Players.LocalPlayer:Kick("You're not whitelisted join https://discord.gg/R9ek7fUCTd to buy")
+
+end
