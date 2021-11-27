@@ -23,7 +23,7 @@ local plr = game.Players.LocalPlayer
 repeat wait() until plr.Character
 local gui = script.Parent
 
-local groupID = 12525963
+local groupID = 13066992
 if plr:IsInGroup(groupID) then
 
     game.StarterGui:SetCore("SendNotification", {
