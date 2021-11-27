@@ -1,49 +1,19 @@
 if game.PlaceId ~= 2788229376 then game.StarterGui:SetCore("SendNotification", {
-    Title = "Prior X";
+    Title = "Slap.cc";
     Text = "Game: Not Supported";
     Duration = 15;
 })
 wait(3) return end
 
-
 game.StarterGui:SetCore("SendNotification", {
-    Title = "Prior X";
-    Text = "Checking";
+    Title = "Slap.cc";
+    Text = "Made By lynx and flash";
     Duration = 15;
 })
 wait(3)
 
-local p = Instance.new("IntValue")
-p.Parent = workspace
-p.Value = game.Players.LocalPlayer.userId
-getuser = game.Players.LocalPlayer.Name
-message = "Logged in"
-
-
-game.StarterGui:SetCore("SendNotification", {
-    Title = "Prior X";
-    Text = "Logging in";
-    Duration = 20;
-})
-wait(10)
-
-
-local plr = game.Players.LocalPlayer
-repeat wait() until plr.Character
-local gui = script.Parent
-
-local groupID = 12525963
-if plr:IsInGroup(groupID) then
-
-    game.StarterGui:SetCore("SendNotification", {
-    Title = "Welcome";
-    Text = getuser;
-    Duration = 20;
-})
-
-
-local L_3_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local L_4_ = L_3_.CreateLib("Prior X", "DarkTheme")
+local L_3_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/dapro0557/theme/main/okLol"))()
+local L_4_ = L_3_.CreateLib("Slap.cc", "BloodTheme")
 local L_13_ = L_4_:NewTab("Keybinds")
 local L_14_ = L_13_:NewSection("Selections")
 L_14_:NewKeybind(
@@ -63,7 +33,7 @@ L_6_:NewButton(
 	function()
 	_G.KEY = "q"
 _G.PART = "HumanoidRootPart"
-_G.PRED = 0.157
+_G.PRED = 0.057
 _G.Frame = Vector3.new(0, 0.53, 0)
 local L_76_ = game:GetService "Workspace".CurrentCamera
 local L_77_
@@ -140,7 +110,7 @@ spawn(
 		L_81_.CanCollide = false
 		L_81_.Size = Vector3.new(0.1, 0.1, 0.1)
 		L_81_.Transparency = 0.1
-		makemarker(L_81_, L_81_, Color3.fromRGB(255, 255, 255), 0.20, 0)
+		makemarker(L_81_, L_81_, Color3.fromRGB(85, 0, 0), 0.20, 0)
 	end
 )
 L_80_.KeyDown:Connect(
@@ -300,7 +270,7 @@ L_6_:NewButton(
 		getgenv().FirstPerson = true
 		getgenv().TeamCheck = false
 		getgenv().PredictMovement = true
-		getgenv().PredictionVelocity = 9
+		getgenv().PredictionVelocity = 9.5
 		local L_27_, L_28_, L_29_, L_30_ =
 			game:GetService "Players",
 		game:GetService "UserInputService",
@@ -316,7 +286,7 @@ L_6_:NewButton(
 		Vector2.new
 		local L_38_, L_39_, L_40_ = true, false, false
 		local L_41_
-		getgenv().PriorX = true
+		getgenv().Slap.cc = true
 		getgenv().WorldToViewportPoint = function(L_42_arg0)
 			return L_33_:WorldToViewportPoint(L_42_arg0)
 		end
@@ -523,7 +493,7 @@ local CurrentCamera = Workspace.CurrentCamera
 local DaHoodSettings = {
     SilentAim = true,
     AimLock = false,
-    Prediction = 0.10,
+    Prediction = 0.057,
     AimLockKeybind = Enum.KeyCode.E
 }
 getgenv().DaHoodSettings = DaHoodSettings
@@ -612,7 +582,7 @@ L_12_:NewButton(
 	"Kaias",
 	"Keyinds T = On/Off M = Faster N = Slower",
     function()
-        IsFirstPerson = false
+IsFirstPerson = false
 ShiftHeld = false
 WHeld = false
 SHeld = false
@@ -1057,8 +1027,7 @@ L_12_:NewButton(
 	"Field Of View",
 	"Like Makes Ur POV Better IG?",
     function()
-     amount = bruh
-    game:GetService'Workspace'.Camera.FieldOfView = amount
+   workspace.CurrentCamera.FieldOfView = (text)
     end)
     L_12_:NewButton(
 	"Infinite Zoom",
@@ -1067,6 +1036,48 @@ L_12_:NewButton(
     game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = math.huge
     end)
 
+ L_12_:NewButton(
+	"Fps Unlocker",
+	"Makes your ping and fps better",
+    function()
+    local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+local g = game
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+t.WaterWaveSize = 0
+t.WaterWaveSpeed = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 0
+l.GlobalShadows = false
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for i, v in pairs(g:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+        v.TextureID = 10385902758728957
+    end
+end
+for i, e in pairs(l:GetChildren()) do
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
+    end
+end
+    end)
 local L_11_ = L_4_:NewTab("Teleports")
 local L_12_ = L_11_:NewSection("Selection")
 L_12_:NewButton(
@@ -1314,6 +1325,13 @@ L_12_:NewButton(
     end)
 
     end)
+   L_12_:NewToggle(
+	"Antifling",
+	"Anchoreds ur body",
+    function(lynx2pro)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = lynx2pro
+    end)
+   
      L_12_:NewButton(
 	"UnderGround",
 	"Keyinds O = Underground P = Go Up",
@@ -1522,21 +1540,3 @@ L_19_:NewToggle(
 		L_18_.Boxes = L_204_arg0
 	end
 )
-
-print("Verison 1.5")
-print("Script loaded = true")
-print("Whitelisted = true")
-print(message,getuser)
-
-else
-    game.StarterGui:SetCore("SendNotification", {
-    Title = "Serpent X";
-    Text = "Failed";
-    Duration = 10;
-    wait(3)
-})
-warn("Whitelisted = false")
-warn("Script loaded = false")
-game.Players.LocalPlayer:Kick("You're not whitelisted join https://discord.gg/zeFa5cPYG4")
-
-end
