@@ -1,4 +1,3 @@
-
 if game.PlaceId ~= 2788229376 then game.StarterGui:SetCore("SendNotification", {
     Title = "Slap.cc";
     Text = "Game: Not Supported";
@@ -287,7 +286,7 @@ L_6_:NewButton(
 		Vector2.new
 		local L_38_, L_39_, L_40_ = true, false, false
 		local L_41_
-		getgenv().Slap.cc = true
+		getgenv().PriorX = true
 		getgenv().WorldToViewportPoint = function(L_42_arg0)
 			return L_33_:WorldToViewportPoint(L_42_arg0)
 		end
@@ -494,7 +493,7 @@ local CurrentCamera = Workspace.CurrentCamera
 local DaHoodSettings = {
     SilentAim = true,
     AimLock = false,
-    Prediction = 0.057,
+    Prediction = 0.157,
     AimLockKeybind = Enum.KeyCode.E
 }
 getgenv().DaHoodSettings = DaHoodSettings
