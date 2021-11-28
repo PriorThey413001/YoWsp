@@ -263,7 +263,7 @@ L_6_:NewButton(
 	"Aimlock",
 	"Camlock",
 	function() 
-	    		getgenv().AimPart = "HumanoidRootPart"
+	    	getgenv().AimPart = "HumanoidRootPart"
 		getgenv().AimlockKey = "q"
 		getgenv().AimRadius = 50
 		getgenv().ThirdPerson = true
