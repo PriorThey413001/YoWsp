@@ -286,7 +286,7 @@ L_6_:NewButton(
 		Vector2.new
 		local L_38_, L_39_, L_40_ = true, false, false
 		local L_41_
-		getgenv().PriorX = true
+		getgenv().Slap.cc = true
 		getgenv().WorldToViewportPoint = function(L_42_arg0)
 			return L_33_:WorldToViewportPoint(L_42_arg0)
 		end
@@ -899,93 +899,209 @@ end
 end
 end)
 end)
+
+L_12_:NewToggle(
+	"Antifling",
+	"Anchoreds ur body",
+    function(lynx2pro)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = lynx2pro
+    end)
+
 local L_11_ = L_4_:NewTab("Other Stuff")
 local L_12_ = L_11_:NewSection("Selection")
 L_12_:NewButton(
 	"Fly (X)",
 	"Super Power",
     function()
-        repeat wait() 
-	until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Head") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
-	local mouse = game.Players.LocalPlayer:GetMouse() 
-	repeat wait() until mouse
-	local plr = game.Players.LocalPlayer 
-	local torso = plr.Character.Head 
-	local flying = false
-	local deb = true 
-	local ctrl = {f = 0, b = 0, l = 0, r = 0} 
-	local lastctrl = {f = 0, b = 0, l = 0, r = 0} 
-	local maxspeed = 4000000000000000000000000 
-	local speed =  4000000000000000000000000 
+        local plr = game.Players.LocalPlayer
+        local mouse = plr:GetMouse()
 
-	function Fly() 
-		local bg = Instance.new("BodyGyro", torso) 
-		bg.P = 9e4 
-		bg.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
-		bg.cframe = torso.CFrame 
-		local bv = Instance.new("BodyVelocity", torso) 
-		bv.velocity = Vector3.new(0,0.1,0) 
-		bv.maxForce = Vector3.new(9e9, 9e9, 9e9) 
-		repeat wait() 
-			plr.Character.Humanoid.PlatformStand = true 
-			if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then 
-				speed = speed+.5+(speed/maxspeed) 
-				if speed > maxspeed then 
-					speed = maxspeed 
-				end 
-			elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then 
-				speed = speed-1 
-				if speed < 0 then 
-					speed = 0 
-				end 
-			end 
-			if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then 
-				bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
-				lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r} 
-			elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then 
-				bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed 
-			else 
-				bv.velocity = Vector3.new(0,0.1,0) 
-			end 
-			bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/maxspeed),0,0) 
-		until not flying 
-		ctrl = {f = 0, b = 0, l = 0, r = 0} 
-		lastctrl = {f = 0, b = 0, l = 0, r = 0} 
-		speed = 0 
-		bg:Destroy() 
-		bv:Destroy() 
-		plr.Character.Humanoid.PlatformStand = false 
-	end 
-	mouse.KeyDown:connect(function(key) 
-		if key:lower() == "x" then 
-			if flying then flying = false 
-			else 
-				flying = true 
-				Fly() 
-			end 
-		elseif key:lower() == "w" then 
-			ctrl.f = 1 
-		elseif key:lower() == "s" then 
-			ctrl.b = -1 
-		elseif key:lower() == "a" then 
-			ctrl.l = -1 
-		elseif key:lower() == "d" then 
-			ctrl.r = 1 
-		end 
-	end) 
-	mouse.KeyUp:connect(function(key) 
-		if key:lower() == "w" then 
-			ctrl.f = 0 
-		elseif key:lower() == "s" then 
-			ctrl.b = 0 
-		elseif key:lower() == "a" then 
-			ctrl.l = 0 
-		elseif key:lower() == "d" then 
-			ctrl.r = 0 
-		end 
-	end)
-	Fly()
-end)
+        localplayer = plr
+
+        if workspace:FindFirstChild("Core") then
+        workspace.Core:Destroy()
+        end
+
+        local Core = Instance.new("Part")
+        Core.Name = "Core"
+        Core.Size = Vector3.new(0.05, 0.05, 0.05)
+
+        spawn(function()
+        Core.Parent = workspace
+        local Weld = Instance.new("Weld", Core)
+        Weld.Part0 = Core
+        Weld.Part1 = localplayer.Character.LowerTorso
+        Weld.C0 = CFrame.new(0, 0, 0)
+        end)
+
+        workspace:WaitForChild("Core")
+
+        local torso = workspace.Core
+        flying = true
+        local speed=10
+        local keys={a=false,d=false,w=false,s=false}
+        local e1
+        local e2
+        local function start()
+        local pos = Instance.new("BodyPosition",torso)
+        local gyro = Instance.new("BodyGyro",torso)
+        pos.Name="EPIXPOS"
+        pos.maxForce = Vector3.new(math.huge, math.huge, math.huge)
+        pos.position = torso.Position
+        gyro.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+        gyro.cframe = torso.CFrame
+        repeat
+        wait()
+        localplayer.Character.Humanoid.PlatformStand=true
+        local new=gyro.cframe - gyro.cframe.p + pos.position
+        if not keys.w and not keys.s and not keys.a and not keys.d then
+        speed=5
+        end
+        if keys.w then
+        new = new + workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+        speed=speed+0
+        end
+        if keys.s then
+        new = new - workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+        speed=speed+0
+        end
+        if keys.d then
+        new = new * CFrame.new(speed,0,0)
+        speed=speed+0
+        end
+        if keys.a then
+        new = new * CFrame.new(-speed,0,0)
+        speed=speed+0
+        end
+        if speed>10 then
+        speed=5
+        end
+        pos.position=new.p
+        if keys.w then
+        gyro.cframe = workspace.CurrentCamera.CoordinateFrame*CFrame.Angles(-math.rad(speed*0),0,0)
+        elseif keys.s then
+        gyro.cframe = workspace.CurrentCamera.CoordinateFrame*CFrame.Angles(math.rad(speed*0),0,0)
+        else
+        gyro.cframe = workspace.CurrentCamera.CoordinateFrame
+        end
+        until flying == false
+        if gyro then gyro:Destroy() end
+        if pos then pos:Destroy() end
+        flying=false
+        localplayer.Character.Humanoid.PlatformStand=false
+        speed=10
+        end
+        e1=mouse.KeyDown:connect(function(key)
+        if not torso or not torso.Parent then flying=false e1:disconnect() e2:disconnect() return end
+        if key=="w" then
+        keys.w=true
+        elseif key=="s" then
+        keys.s=true
+        elseif key=="a" then
+        keys.a=true
+        elseif key=="d" then
+        keys.d=true
+        elseif key=="x" then
+        if flying==true then
+        flying=false
+        else
+        flying=true
+        start()
+        end
+        end
+        end)
+        e2=mouse.KeyUp:connect(function(key)
+        if key=="w" then
+        keys.w=false
+        elseif key=="s" then
+        keys.s=false
+        elseif key=="a" then
+        keys.a=false
+        elseif key=="d" then
+        keys.d=false
+        end
+        end)
+        start()
+        end)
+
+L_12_:NewButton(
+	"Anti Slow",
+	"No Walk Slowdown",
+    function()
+    local mt = getrawmetatable(game)
+                local backup
+                backup = hookfunction(mt.__newindex, newcclosure(function(self, key, value)
+                if key == "WalkSpeed" and value < 16 then
+                value = 16
+                end
+                return backup(self, key, value)
+                end))
+        end)
+
+L_12_:NewButton(
+	"TrashTalk",
+	"Keybind = J",
+    function()
+     local plr = game.Players.LocalPlayer
+                repeat wait() until plr.Character
+                local char = plr.Character
+
+                local garbage = {
+                "ur bad";
+                "lma() nice try bud";
+                "ez";
+                "my grandma has more skill than you";
+                "gun user";
+                "bunny hopper";
+                "trash";
+                "LOL";
+                "LMAO";
+                "imagine being you right now";
+                "xd";
+                "you smell";
+                "ur bad";
+                "why do you even try";
+                "I didn't think being this bad was possible";
+                "leave";
+                "no skill";
+                "you thought u ate lol";
+                "bad";
+                "you're nothing";
+                "lol";
+                "so trash";
+                "dog water";
+                "ur salty";
+                "salty";
+                "look he's mad";
+                "cry more";
+                "keep crying";
+                "cry baby";
+                "hahaha I won";
+                "no one likes u";
+                "darn";
+                "thank you for your time";
+                "you were so close!";
+                "better luck next time!";
+                "rodent";
+                "ur so bad ur my seed";
+                "/e dab";
+                "./e dab";
+                "time to take out the trash";
+                "did you get worse?";
+                "I'm surprised you haven't quit yet";
+            }
+                function TrashTalk(inputObject, gameProcessedEvent)
+                 if inputObject.KeyCode == Enum.KeyCode.J and gameProcessedEvent == false then
+                game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(
+                garbage[math.random(1,#garbage)],
+                "All"
+                )
+                     end
+                end
+                game:GetService("UserInputService").InputBegan:connect(TrashTalk)
+                end)
+
+
 L_12_:NewButton(
 	"Headless",
 	"CilentSided Headless",
@@ -1025,9 +1141,9 @@ L_12_:NewButton(
     end)
     L_12_:NewTextBox(
 	"Field Of View",
-	"Like Makes Ur POV Better IG?",
-    function()
-   workspace.CurrentCamera.FieldOfView = (text)
+	"Changes Camera Fov",
+    function(value)
+    workspace.CurrentCamera.FieldOfView = (value)
     end)
     L_12_:NewButton(
 	"Infinite Zoom",
@@ -1078,6 +1194,72 @@ for i, e in pairs(l:GetChildren()) do
     end
 end
     end)
+
+local L_11_ = L_4_:NewTab("FaceAnim")
+local L_12_ = L_11_:NewSection("Selection")
+
+L_12_:NewButton(
+	"Zombie,Toy,O,M",
+	"Gives ZTOM",
+    function()
+    local L_206_ = game.Players.LocalPlayer.Character.Animate
+            L_206_.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=782841498"
+            L_206_.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=782845736"
+            L_206_.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
+            L_206_.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616163682"
+            L_206_.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=5319841935"
+            L_206_.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=707829716"
+    end)
+    
+    L_12_:NewButton(
+	"Zombie,Toy,M",
+	"Gives ZTM",
+    function()
+     local L_206_ = game.Players.LocalPlayer.Character.Animate
+            L_206_.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=782841498"
+            L_206_.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=782845736"
+            L_206_.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
+            L_206_.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616163682"
+            L_206_.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083218792"
+            L_206_.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=707829716"
+    end)
+
+
+ L_12_:NewButton(
+	"PlayfulVampire",
+	"Gives PlayfulVampire",
+    function()
+        game.Players.LocalPlayer.Character.Head.face.Texture = "rbxassetid://2409281591"
+    end)
+    
+    L_12_:NewButton(
+	"Supper Supper Happy Face",
+	"Gives Supper Supper Happy Face",
+    function()
+       game.Players.LocalPlayer.Character.Head.face.Texture = "rbxassetid://494290547"
+    end)
+    
+    L_12_:NewButton(
+	"Prankster",
+	"Gives Prankster",
+    function()
+     game.Players.LocalPlayer.Character.Head.face.Texture = "rbxassetid://2409281591"
+    end)
+    
+     L_12_:NewButton(
+	"Blizzard Beast Mode",
+	"Gives Blizzard",
+    function()
+      game.Players.LocalPlayer.Character.Head.face.Texture = "rbxassetid://209712379"
+    end)
+        L_12_:NewButton(
+	"Madness Face",
+	"Gives Madness Face",
+    function()
+  game.Players.LocalPlayer.Character.Head.face.Texture = "rbxassetid://129900258"
+    end)
+    
+    
 local L_11_ = L_4_:NewTab("Teleports")
 local L_12_ = L_11_:NewSection("Selection")
 L_12_:NewButton(
@@ -1203,6 +1385,146 @@ L_12_:NewButton(
 
 local L_11_ = L_4_:NewTab("Misc Stuff")
 local L_12_ = L_11_:NewSection("Selection")
+
+L_12_:NewButton(
+	"Serverhop",
+	"Joins different server",
+    function()
+    local x = {}
+            for _, v in ipairs(game:GetService("HttpService"):JSONDecode(game:HttpGetAsync("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100")).data) do
+                if type(v) == "table" and v.maxPlayers > v.playing and v.id ~= game.JobId then
+                    x[#x + 1] = v.id
+                end
+            end
+            if #x > 0 then
+                game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, x[math.random(1, #x)])
+            else
+             game.StarterGui:SetCore("SendNotification", {
+    Title = "Slap.cc";
+    Text = "Failed 2 Find Server";
+    Duration = 3;
+})
+wait(0)
+            end
+        end)
+ 
+
+L_12_:NewButton(
+	"Rejoin Server",
+	"Rejoins Same Server",
+    function()
+     local tpservice= game:GetService("TeleportService")
+            local plr = game.Players.LocalPlayer
+
+            tpservice:Teleport(game.PlaceId, plr)
+    end)
+
+L_12_:NewButton(
+	"ChatSpy",
+	"Be able to see everybodys chat",
+    function()
+      -- // Initialise
+        --if (getgenv().ChatSpy) then return getgenv().ChatSpy; end;
+        repeat wait() until game:GetService("ContentProvider").RequestQueueSize == 0;
+        repeat wait() until game:IsLoaded();
+
+        -- // Vars
+        local Players = game:GetService("Players");
+        local StarterGui = game:GetService("StarterGui");
+        local ReplicatedStorage = game:GetService("ReplicatedStorage");
+        local LocalPlayer = Players.LocalPlayer;
+        local PlayerGui = LocalPlayer:WaitForChild("PlayerGui");
+        local DefaultChatSystemChatEvents = ReplicatedStorage:WaitForChild("DefaultChatSystemChatEvents");
+        local SayMessageRequest = DefaultChatSystemChatEvents:WaitForChild("SayMessageRequest");
+        local OnMessageDoneFiltering = DefaultChatSystemChatEvents:WaitForChild("OnMessageDoneFiltering");
+        getgenv().ChatSpy = {
+            Enabled = true,
+            SpyOnSelf = true,
+            Public = false,
+            Chat = {
+                Colour  = Color3.fromRGB(255, 0, 0),
+                Font = Enum.Font.SourceSans,
+                TextSize = 18,
+                Text = "",
+            },
+            IgnoreList = {
+                {Message = ":part/1/1/1", ExactMatch = true},
+                {Message = ":part/10/10/10", ExactMatch = true},
+                {Message = "A?????????", ExactMatch = false},
+                {Message = ":colorshifttop 10000 0 0", ExactMatch = true},
+                {Message = ":colorshiftbottom 10000 0 0", ExactMatch = true},
+                {Message = ":colorshifttop 0 10000 0", ExactMatch = true},
+                {Message = ":colorshiftbottom 0 10000 0", ExactMatch = true},
+                {Message = ":colorshifttop 0 0 10000", ExactMatch = true},
+                {Message = ":colorshiftbottom 0 0 10000", ExactMatch = true},
+            },
+        };
+
+        -- // Function
+        function ChatSpy.checkIgnored(message)
+            for i = 1, #ChatSpy.IgnoreList do
+                local v = ChatSpy.IgnoreList[i];
+                if (v.ExactMatch and message == v.Message) or (not v.ExactMatch and string.match(v.Message, message)) then
+                    return true;
+                end;
+            end;
+            return false;
+        end;
+
+        function ChatSpy.onChatted(targetPlayer, message)
+            if (targetPlayer == LocalPlayer and string.lower(message):sub(1, 4) == "/spy") then
+                ChatSpy.Enabled = not ChatSpy.Enabled; wait(0.3);
+                ChatSpy.Chat.Text = "[SPY] - "..(ChatSpy.Enabled and "Enabled." or "Disabled.");
+
+                StarterGui:SetCore("ChatMakeSystemMessage", ChatSpy.Chat);
+            elseif (ChatSpy.Enabled and (ChatSpy.SpyOnSelf or targetPlayer ~= LocalPlayer)) then
+                local message = message:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ');
+
+                local Hidden = true;
+                local Connection = OnMessageDoneFiltering.OnClientEvent:Connect(function(packet, channel)
+                    if (packet.SpeakerUserId == targetPlayer.UserId and packet.Message == message:sub(#message - #packet.Message + 1) and (channel == "All" or (channel == "Team" and not ChatSpy.Public and Players[packet.FromSpeaker].Team == LocalPlayer.Team))) then
+                        Hidden = false;
+                    end;
+                end);
+
+                wait(1);
+                Connection:Disconnect();
+
+                if (Hidden and ChatSpy.Enabled and not ChatSpy.checkIgnored(message)) then
+                    if (#message > 1200) then
+                        message = message:sub(1200) .. "...";
+                    end;
+                    ChatSpy.Chat.Text = "[SPY] - ["..targetPlayer.Name.."]: " .. message;
+                    if (ChatSpy.Public) then SayMessageRequest:FireServer(ChatSpy.Chat.Text, "All"); else StarterGui:SetCore("ChatMakeSystemMessage", ChatSpy.Chat); end;
+                end;
+            end;
+        end;
+
+        -- // Handling Chats
+        local AllPlayers = Players:GetPlayers();
+        for i = 1, #AllPlayers do
+            local player = AllPlayers[i];
+            player.Chatted:Connect(function(message)
+                ChatSpy.onChatted(player, message);
+            end);
+        end;
+
+        Players.PlayerAdded:Connect(function(player)
+            player.Chatted:Connect(function(message)
+                ChatSpy.onChatted(player, message);
+            end);
+        end);
+
+        -- // Initialise Text
+        ChatSpy.Chat.Text = "[SPY] - "..(ChatSpy.Enabled and "Enabled." or "Disabled.");
+        StarterGui:SetCore("ChatMakeSystemMessage", ChatSpy.Chat);
+
+        -- // Update Chat Frame
+        local chatFrame = LocalPlayer.PlayerGui.Chat.Frame;
+        chatFrame.ChatChannelParentFrame.Visible = true;
+        chatFrame.ChatBarParentFrame.Position = chatFrame.ChatChannelParentFrame.Position + UDim2.new(UDim.new(), chatFrame.ChatChannelParentFrame.Size.Y);
+        end)
+
 L_12_:NewButton(
 	"Noclip (C) Broken",
 	"Go Through Walls",
@@ -1325,12 +1647,7 @@ L_12_:NewButton(
     end)
 
     end)
-   L_12_:NewToggle(
-	"Antifling",
-	"Anchoreds ur body",
-    function(lynx2pro)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = lynx2pro
-    end)
+  
    
      L_12_:NewButton(
 	"UnderGround",
