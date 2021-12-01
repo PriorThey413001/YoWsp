@@ -1,4 +1,4 @@
-if game.PlaceId ~=  6751371363 then game.StarterGui:SetCore("SendNotification", {
+if game.PlaceId ~= 2788229376 then game.StarterGui:SetCore("SendNotification", {
     Title = "Slap.cc";
     Text = "Game: Not Supported";
     Duration = 15;
